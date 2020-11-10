@@ -3,67 +3,73 @@
 #include "Resource.hpp"
 #include <iostream>
 
+using namespace std;
+
+
 class ResourceManager
 {
 public:
 
   ResourceManager() {
-    r = new Resource;
+    res = new Resource;
   }
 
-    ResourceManager(const ResourceManager& resM)
+    ResourceManager(const ResourceManager& rs) // copying constructor
     {
-        r = new Resource{*resM.r};
-        std::cout << "konstruktor kopiujący: " << r << std::endl;
+        cout << "copying_constr" << endl;
+        res = new Resource{*rs.res};
+        cout << res << endl;
     }
-    
-    ResourceManager(ResourceManager&& resM) 
+
+    ResourceManager& operator=(const ResourceManager& rs)
     {
-        std::cout << "konstruktor przenoszacy: " << std::endl;
-        r    = move(resM.r); 
-        resM.r = nullptr;
-    }
-   
-    ResourceManager& operator=(const ResourceManager& resM)
-    {
-        if (!(r == nullptr)) {
-            std::cout << "samo usuwanie: " << std::endl;
-            delete r;
+        if (!(res == nullptr)) {
+            cout << "selfDeleting" << endl;
+            delete res;
         }
-        r = new Resource{*resM.r};
-        std::cout << "Operator kopiujacy: " << r << std::endl;
+        cout << "copying_operator" << endl;
+        res = new Resource{*rs.res};
+        cout << res << endl;
         return *this;
     }
 
-    ResourceManager& operator=(ResourceManager&& resM)
+    ResourceManager(ResourceManager&& rs) // moving constructor
     {
-        if (&resM == this)
+        cout << "moving_constr" << endl;
+        res    = move(rs.res); // wywola konstruktor przenoszacy
+        rs.res = nullptr;
+    }
+
+    ResourceManager& operator=(ResourceManager&& rs)
+    {
+        if (&rs == this) // prevent self-copying
         {
-            std::cout << "samo przenoszenie: " << std::endl;
+            cout << "selfMoving!!!!!!!!!!!!!!!!!!!!!!!" << endl;
             return *this;
         }
-        else if (!(r == nullptr)) {
-            std::cout << "samo usuwanie" << std::endl;
-            delete r;
+        else if (!(res == nullptr)) {
+            cout << "selfDeleting" << endl;
+            delete res;
         }
-        std::cout << "Operator przenoszacy: " << std::endl;
-        r = move(resM.r); 
+        cout << "moving_operator" << endl;
+        res = move(rs.res); // wywola konstruktor przenoszacy
 
-        resM.r = nullptr;
+        rs.res = nullptr;
         return *this;
     }
 
     ~ResourceManager()
     {
-        std::cout << "Destruktor: " << r << std::endl;
-        delete r;
+        cout << "deconst" << endl;
+        cout << res << endl;
+        delete res;
     }
 
   double get()
   {
-    return r->get();
+    return res->get();
   }
 
 private:
-    Resource* r = nullptr;
+    Resource* res = nullptr;
 };
