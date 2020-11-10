@@ -8,29 +8,29 @@ class ResourceManager
 {
 public:
   ResourceManager() {
-    res = new Resource;
+    source = new Resource;
   }
 
     ResourceManager(const ResourceManager& r) 
     {
-        res = new Resource{*r.res};
-        cout << res<<endl;
+        source = new Resource{*r.source};
+        cout << source<<endl;
     }
 
     ResourceManager& operator=(const ResourceManager& r)
     {
-        if (!(res == nullptr)) {
-            delete res;
+        if (!(source == nullptr)) {
+            delete source;
         }
-        res = new Resource{*r.res};
-        cout <<  res << endl;
+        source = new Resource{*r.source};
+        cout <<  source << endl;
         return *this;
     }
 
     ResourceManager(ResourceManager&& r)
     {
-        res    = move(r.res);
-        r.res = nullptr;
+        source    = move(r.source);
+        r.source = nullptr;
     }
 
     ResourceManager& operator=(ResourceManager&& r)
@@ -39,26 +39,26 @@ public:
         {
             return *this;
         }
-        else if (!(res == nullptr)) {
-            delete res;
+        else if (!(source == nullptr)) {
+            delete source;
         }
-        res = move(r.res); 
+        source = move(r.source); 
 
-        r.res = nullptr;
+        r.source = nullptr;
         return *this;
     }
 
     ~ResourceManager()
     {
-        cout << res << endl;
-        delete res;
+        cout << source << endl;
+        delete source;
     }
 
   double get()
   {
-    return res->get();
+    return source->get();
   }
 
 private:
-    Resource* res = nullptr;
+    Resource* source = nullptr;
 };
