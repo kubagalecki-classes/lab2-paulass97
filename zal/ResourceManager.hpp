@@ -15,23 +15,21 @@ public:
     ResourceManager(const ResourceManager& rs) 
     {
         res = new Resource{*rs.res};
-        cout << "Konstruktor kopiujacy" << res<<endl;
+        cout << res<<endl;
     }
 
     ResourceManager& operator=(const ResourceManager& rs)
     {
         if (!(res == nullptr)) {
-            cout << "Usuwanie" << endl;
             delete res;
         }
         res = new Resource{*rs.res};
-        cout << "Operator kopiujacy" << res << endl;
+        cout <<  res << endl;
         return *this;
     }
 
     ResourceManager(ResourceManager&& rs)
     {
-        cout << "Konstruktor przenoszacy" << endl;
         res    = move(rs.res);
         rs.res = nullptr;
     }
@@ -40,14 +38,11 @@ public:
     {
         if (&rs == this)
         {
-            cout << "Przenoszenie" << endl;
             return *this;
         }
         else if (!(res == nullptr)) {
-            cout << "Usuwanie" << endl;
             delete res;
         }
-        cout << "Operator przenoszacy" << endl;
         res = move(rs.res); 
 
         rs.res = nullptr;
@@ -56,7 +51,7 @@ public:
 
     ~ResourceManager()
     {
-        cout << "destruktor" << res << endl;
+        cout << res << endl;
         delete res;
     }
 
