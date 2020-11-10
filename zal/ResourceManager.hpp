@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 class ResourceManager
 {
 public:
@@ -14,9 +13,9 @@ public:
     res = new Resource;
   }
 
-    ResourceManager(const ResourceManager& rs) // copying constructor
+    ResourceManager(const ResourceManager& rs) 
     {
-        cout << "copying_constr" << endl;
+        cout << "Konstruktor kopiujacy" << endl;
         res = new Resource{*rs.res};
         cout << res << endl;
     }
@@ -24,35 +23,35 @@ public:
     ResourceManager& operator=(const ResourceManager& rs)
     {
         if (!(res == nullptr)) {
-            cout << "selfDeleting" << endl;
+            cout << "Usuwanie" << endl;
             delete res;
         }
-        cout << "copying_operator" << endl;
+        cout << "Operator kopiujacy" << endl;
         res = new Resource{*rs.res};
         cout << res << endl;
         return *this;
     }
 
-    ResourceManager(ResourceManager&& rs) // moving constructor
+    ResourceManager(ResourceManager&& rs)
     {
-        cout << "moving_constr" << endl;
-        res    = move(rs.res); // wywola konstruktor przenoszacy
+        cout << "Konstruktor przenoszacy" << endl;
+        res    = move(rs.res);
         rs.res = nullptr;
     }
 
     ResourceManager& operator=(ResourceManager&& rs)
     {
-        if (&rs == this) // prevent self-copying
+        if (&rs == this)
         {
-            cout << "selfMoving!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+            cout << "Przenoszenie" << endl;
             return *this;
         }
         else if (!(res == nullptr)) {
-            cout << "selfDeleting" << endl;
+            cout << "Usuwanie" << endl;
             delete res;
         }
-        cout << "moving_operator" << endl;
-        res = move(rs.res); // wywola konstruktor przenoszacy
+        cout << "Operator przenoszacy" << endl;
+        res = move(rs.res); 
 
         rs.res = nullptr;
         return *this;
@@ -60,7 +59,7 @@ public:
 
     ~ResourceManager()
     {
-        cout << "deconst" << endl;
+        cout << "destruktor" << endl;
         cout << res << endl;
         delete res;
     }
