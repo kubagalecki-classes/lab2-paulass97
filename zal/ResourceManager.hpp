@@ -2,7 +2,6 @@
 
 #include "Resource.hpp"
 #include <iostream>
-
 using namespace std;
 
 class ResourceManager
@@ -15,9 +14,8 @@ public:
 
     ResourceManager(const ResourceManager& rs) 
     {
-        cout << "Konstruktor kopiujacy" << endl;
         res = new Resource{*rs.res};
-        cout << res << endl;
+        cout << "Konstruktor kopiujacy" << res<<endl;
     }
 
     ResourceManager& operator=(const ResourceManager& rs)
@@ -26,9 +24,8 @@ public:
             cout << "Usuwanie" << endl;
             delete res;
         }
-        cout << "Operator kopiujacy" << endl;
         res = new Resource{*rs.res};
-        cout << res << endl;
+        cout << "Operator kopiujacy" << res << endl;
         return *this;
     }
 
@@ -59,8 +56,7 @@ public:
 
     ~ResourceManager()
     {
-        cout << "destruktor" << endl;
-        cout << res << endl;
+        cout << "destruktor" << res << endl;
         delete res;
     }
 
